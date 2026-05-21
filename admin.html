@@ -8,50 +8,688 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
+  <style>
+    :root {
+      --admin-bg: #fff6d6;
+      --admin-surface: rgba(255, 255, 255, 0.92);
+      --admin-surface-strong: #fffce8;
+      --accent: #fff085;
+      --accent-dark: #d8c261;
+    }
+
+    body {
+      background: linear-gradient(180deg, #fef8e7 0%, #fff6d6 40%, #f9efdc 100%);
+    }
+
+    .admin-dashboard {
+      min-height: 100vh;
+      display: flex;
+      background: transparent;
+    }
+
+    .admin-sidebar {
+      width: 280px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #441306 0%, #5b1f14 100%);
+      color: #fff;
+      padding: 1.5rem 1.1rem;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 24px 50px rgba(68, 19, 6, 0.18);
+    }
+
+    .admin-sidebar .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.6rem;
+      font-family: var(--font-display);
+      letter-spacing: 0.04em;
+    }
+
+    .admin-sidebar .brand i {
+      font-size: 1.55rem;
+      color: var(--accent);
+      background: rgba(255, 240, 133, 0.16);
+      width: 3rem;
+      height: 3rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+    }
+
+    .admin-sidebar h2 {
+      margin: 0;
+      line-height: 1.1;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+
+    .admin-sidebar p {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.94rem;
+      margin-top: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.82rem 0.92rem;
+      border-radius: 1rem;
+      color: #fff;
+      transition: transform 0.25s ease, background 0.25s ease;
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      transform: translateX(4px);
+      background: rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
+    .sidebar-nav a i {
+      width: 1.8rem;
+      text-align: center;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .admin-main {
+      flex: 1;
+      padding: 1.65rem 1.5rem;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .admin-header .hero {
+      max-width: 720px;
+    }
+
+    .admin-header .hero h1 {
+      font-size: clamp(2.5rem, 3.4vw, 3.6rem);
+      margin-bottom: 0.8rem;
+      color: #441306;
+    }
+
+    .admin-header .hero p {
+      color: #67413a;
+      font-size: 1rem;
+      max-width: 640px;
+    }
+
+    .admin-header .profile-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--admin-surface-strong);
+      border-radius: 1.5rem;
+      padding: 1rem 1.3rem;
+      border: 1px solid rgba(68, 19, 6, 0.08);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .profile-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff085 0%, #f3e390 100%);
+      display: grid;
+      place-items: center;
+      color: #441306;
+      font-size: 1.45rem;
+      box-shadow: inset 0 6px 12px rgba(255, 255, 255, 0.65);
+    }
+
+    .profile-meta h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #441306;
+    }
+
+    .profile-meta p {
+      margin: 0.25rem 0 0;
+      color: #7b523f;
+      font-size: 0.94rem;
+    }
+
+    .panel-card {
+      border: none;
+      border-radius: 1.6rem;
+      background: var(--admin-surface);
+      padding: 1.45rem;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .panel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 44px rgba(68, 19, 6, 0.16);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 240, 133, 0.15));
+      border: 1px solid rgba(68, 19, 6, 0.08);
+      border-radius: 1.6rem;
+      padding: 1.8rem 1.6rem;
+      min-height: 170px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .stat-card:hover {
+      transform: perspective(500px) rotateX(3deg) rotateY(-3deg) translateY(-6px);
+      box-shadow: 0 22px 40px rgba(68, 19, 6, 0.16);
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255, 240, 133, 0.55), transparent 35%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .stat-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-card i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 1rem;
+      background: rgba(68, 19, 6, 0.08);
+      color: #441306;
+      margin-bottom: 1rem;
+      font-size: 1.15rem;
+    }
+
+    .stat-label {
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5a271b;
+      margin-bottom: 0.55rem;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #441306;
+      line-height: 1;
+    }
+
+    .stat-note {
+      color: #6a4337;
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .table-responsive {
+      margin-bottom: 2rem;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      color: #441306;
+    }
+
+    .table thead th {
+      border-bottom: none;
+      color: #5b2f22;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+    }
+
+    .table tbody tr {
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 1.05rem;
+      box-shadow: inset 0 0 0 1px rgba(68, 19, 6, 0.05);
+    }
+
+    .table tbody tr td {
+      vertical-align: middle;
+      border: none;
+      padding: 1rem 0.9rem;
+      color: #5f3c34;
+    }
+
+    .table tbody tr:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #441306;
+      background: rgba(255, 224, 125, 0.35);
+    }
+
+    .status-badge.in-transit { background: rgba(255, 208, 102, 0.35); }
+    .status-badge.arrived { background: rgba(178, 172, 97, 0.25); }
+    .status-badge.received { background: rgba(209, 196, 84, 0.25); }
+
+    .btn-action {
+      min-width: 105px;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.86rem;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-action:hover { transform: translateY(-1px); }
+
+    .cargo-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .cargo-list {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .cargo-item {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 1.4rem;
+      padding: 0.95rem 1rem;
+      border: 1px solid rgba(68, 19, 6, 0.06);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .cargo-item h4 {
+      margin: 0;
+      font-size: 1rem;
+      color: #441306;
+    }
+
+    .cargo-details {
+      font-size: 0.92rem;
+      color: #6b4538;
+      margin-top: 0.55rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .inventory-control {
+      background: rgba(68, 19, 6, 0.04);
+      border-radius: 1.4rem;
+      padding: 1.4rem;
+      border: 1px solid rgba(68, 19, 6, 0.08);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .inventory-control label {
+      font-weight: 700;
+      color: #5f3b31;
+      margin-bottom: 0.65rem;
+      display: block;
+    }
+
+    .inventory-control select {
+      width: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(68, 19, 6, 0.15);
+      padding: 0.95rem 1rem;
+      font-size: 0.95rem;
+      color: #502f23;
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .chart-card {
+      min-height: 310px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255, 240, 133, 0.18), rgba(255, 255, 255, 0.96));
+      border: 1px solid rgba(68, 19, 6, 0.08);
+      border-radius: 1.6rem;
+      padding: 2rem;
+    }
+
+    .chart-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at top left, rgba(255, 240, 133, 0.35) 0%, transparent 28%), radial-gradient(circle at bottom right, rgba(68, 19, 6, 0.08) 0%, transparent 18%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .chart-card .chart-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .chart-overlay {
+      flex: 1;
+      min-height: 180px;
+      border-radius: 1.3rem;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px dashed rgba(68, 19, 6, 0.15);
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      text-align: center;
+      color: #6a4336;
+    }
+
+    .chart-overlay h3 {
+      margin-bottom: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    .chart-overlay p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #806051;
+    }
+
+    .report-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 0.95rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(68, 19, 6, 0.1);
+      color: #4f2b20;
+      font-size: 0.94rem;
+    }
+
+    .report-pill span {
+      width: 0.75rem;
+      height: 0.75rem;
+      display: inline-flex;
+      border-radius: 50%;
+      background: #f3e08c;
+    }
+
+    @media (max-width: 1199px) {
+      .admin-dashboard { flex-direction: column; }
+      .admin-sidebar { width: 100%; min-height: auto; position: relative; top: auto; }
+      .admin-main { padding: 1.5rem 1.3rem 2rem; }
+      .cargo-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 767px) {
+      .sidebar-nav a { justify-content: center; text-align: center; }
+      .sidebar-nav a span { display: none; }
+      .admin-sidebar .brand { justify-content: center; }
+      .admin-header { flex-direction: column; align-items: stretch; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .section-heading { flex-direction: column; align-items: flex-start; }
+      .admin-sidebar p { display: none; }
+    }
+  </style>
 </head>
 <body>
-<nav id="mainNavbar" class="navbar navbar-expand-lg">
-  <div class="container">
-    <a class="navbar-brand nav-brand" href="index.html">
-      <div class="nav-brand-icon"><i class="fas fa-plane"></i></div>
-      <div class="nav-brand-text">Mid<span>eye</span></div>
-    </a>
-    <button class="navbar-toggler-custom d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavMenu">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="mobileNavMenu">
-      <ul class="navbar-nav mx-auto gap-1">
-        <li class="nav-item"><a class="nav-link-custom" data-page="index.html" href="index.html"><i class="fas fa-home me-1"></i>Home</a></li>
-        <li class="nav-item"><a class="nav-link-custom" data-page="booking.html" href="booking.html"><i class="fas fa-plane me-1"></i>Book Flight</a></li>
-        <li class="nav-item"><a class="nav-link-custom" data-page="cargo.html" href="cargo.html"><i class="fas fa-box me-1"></i>Cargo</a></li>
-        <li class="nav-item"><a class="nav-link-custom" data-page="tracking.html" href="tracking.html"><i class="fas fa-map-marker-alt me-1"></i>Track</a></li>
-      </ul>
-      <div class="d-flex gap-2 mt-3 mt-lg-0">
-        <a href="login.html" class="btn-outline-custom" style="font-size:0.85rem;padding:0.6rem 1.3rem;">Login</a>
-        <a href="register.html" class="btn-gold-custom" style="font-size:0.85rem;padding:0.6rem 1.3rem;">Register</a>
-      </div>
-    </div>
-  </div>
-</nav>
-<main style="padding:5rem 0;">
-  <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-eyebrow">Dashboard</span>
-      <h1 class="section-title mt-3">Admin Area</h1>
-      <p class="section-desc mx-auto text-center" style="max-width:720px;">This page is a placeholder for the admin dashboard. Your login now points to a valid page instead of a 404.</p>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="card p-4 shadow-sm">
-          <h3 class="mb-3">Welcome, Admin</h3>
-          <p>Use the navigation links above to visit the public pages. This admin page exists so the login redirect does not generate a missing page error.</p>
+  <div class="admin-dashboard">
+    <aside class="admin-sidebar">
+      <div class="brand">
+        <i class="fas fa-plane-departure"></i>
+        <div>
+          <h2>Mideye</h2>
         </div>
       </div>
-    </div>
+      <p>Premium travel operations, booking control, and cargo oversight from one elegant console.</p>
+      <ul class="sidebar-nav">
+        <li><a href="#overview" class="active"><i class="fas fa-chart-pie"></i><span>Overview</span></a></li>
+        <li><a href="#bookings"><i class="fas fa-plane"></i><span>Flight Bookings</span></a></li>
+        <li><a href="#cargo"><i class="fas fa-box"></i><span>Cargo Tracking</span></a></li>
+        <li><a href="#reports"><i class="fas fa-chart-line"></i><span>Reports</span></a></li>
+        <li><a href="index.html"><i class="fas fa-globe"></i><span>Public Site</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="admin-main">
+      <section class="admin-header">
+        <div class="hero">
+          <span class="section-eyebrow">Admin Dashboard</span>
+          <h1>Welcome back, travel operations lead.</h1>
+          <p>Monitor bookings, supervise cargo status, and keep revenue performance on track with a polished, responsive admin experience built for Mideye Travel Agency.</p>
+        </div>
+        <div class="profile-box">
+          <div class="profile-avatar"><i class="fas fa-user-tie"></i></div>
+          <div class="profile-meta">
+            <h3>Adila Mohamed</h3>
+            <p>Senior Operations Manager</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview" class="panel-card">
+        <div class="section-heading">
+          <h2>Performance Overview</h2>
+          <div class="report-pill"><span></span>Live operations data stream</div>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-card-content">
+              <i class="fas fa-suitcase-rolling"></i>
+              <div class="stat-label">Total Bookings</div>
+              <div class="stat-value">1,248</div>
+              <p class="stat-note">Bookings processed this month across all classes.</p>
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-card-content">
+              <i class="fas fa-shipping-fast"></i>
+              <div class="stat-label">Total Cargo</div>
+              <div class="stat-value">732</div>
+              <p class="stat-note">Cargo consignments handled with real-time tracking.</p>
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-card-content">
+              <i class="fas fa-dollar-sign"></i>
+              <div class="stat-label">Revenue</div>
+              <div class="stat-value">$198.4K</div>
+              <p class="stat-note">Gross revenue for the current reporting period.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="bookings" class="panel-card mt-4">
+        <div class="section-heading">
+          <h2>Manage Flight Bookings</h2>
+          <button class="btn btn-primary-custom"><i class="fas fa-sync-alt"></i> Refresh data</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th>Passenger</th>
+                <th>Route</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Layla Ahmed</strong><br>
+                  <small class="text-muted">Economy</small>
+                </td>
+                <td>Hargeisa → Nairobi</td>
+                <td>May 20, 2026</td>
+                <td><span class="status-badge received"><i class="fas fa-check-circle"></i> Pending</span></td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-2">
+                    <button class="btn btn-success btn-action">Approve</button>
+                    <button class="btn btn-outline-danger btn-action">Reject</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Abdi Rahman</strong><br>
+                  <small class="text-muted">Business</small>
+                </td>
+                <td>Mogadishu → Dubai</td>
+                <td>May 22, 2026</td>
+                <td><span class="status-badge in-transit"><i class="fas fa-plane"></i> Confirmed</span></td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-2">
+                    <button class="btn btn-success btn-action">Approve</button>
+                    <button class="btn btn-outline-danger btn-action">Reject</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Iman Yusuf</strong><br>
+                  <small class="text-muted">Premium</small>
+                </td>
+                <td>Djibouti → Istanbul</td>
+                <td>May 24, 2026</td>
+                <td><span class="status-badge arrived"><i class="fas fa-clock"></i> Review</span></td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-2">
+                    <button class="btn btn-success btn-action">Approve</button>
+                    <button class="btn btn-outline-danger btn-action">Reject</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="cargo" class="panel-card mt-4">
+        <div class="section-heading">
+          <h2>Manage Cargo Tracking</h2>
+          <span class="report-pill"><span></span>Cargo status updates</span>
+        </div>
+        <div class="cargo-grid">
+          <div class="cargo-list">
+            <div class="cargo-item">
+              <h4>Express parcel #C317</h4>
+              <div class="cargo-details">
+                <span><strong>Route:</strong> Berbera → Dubai</span>
+                <span><strong>Weight:</strong> 520 kg</span>
+                <span><strong>Current status:</strong> <span class="status-badge in-transit">In Transit</span></span>
+              </div>
+            </div>
+            <div class="cargo-item">
+              <h4>Priority shipment #C145</h4>
+              <div class="cargo-details">
+                <span><strong>Route:</strong> Hargeisa → Addis Ababa</span>
+                <span><strong>Weight:</strong> 310 kg</span>
+                <span><strong>Current status:</strong> <span class="status-badge received">Received</span></span>
+              </div>
+            </div>
+            <div class="cargo-item">
+              <h4>Standard freight #C900</h4>
+              <div class="cargo-details">
+                <span><strong>Route:</strong> Mogadishu → Doha</span>
+                <span><strong>Weight:</strong> 680 kg</span>
+                <span><strong>Current status:</strong> <span class="status-badge arrived">Arrived</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="inventory-control">
+            <label for="cargoStatus">Update cargo status</label>
+            <select id="cargoStatus" class="form-select">
+              <option value="received">Received</option>
+              <option value="in-transit">In Transit</option>
+              <option value="arrived">Arrived</option>
+            </select>
+            <p class="mt-3 text-muted">Choose a shipment status to see how the dashboard reflects the operation workflow.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports" class="panel-card mt-4">
+        <div class="section-heading">
+          <h2>Sales & Operations Report</h2>
+          <button class="btn btn-primary-custom"><i class="fas fa-download"></i> Export report</button>
+        </div>
+        <div class="chart-card">
+          <div class="chart-content">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div>
+                <h3>Daily analytics snapshot</h3>
+                <p>Review bookings, cargo throughput, and revenue momentum from the latest trading window.</p>
+              </div>
+              <span class="report-pill"><span></span>Updated 10 minutes ago</span>
+            </div>
+            <div class="chart-overlay">
+              <i class="fas fa-chart-area fa-2x mb-3" style="color:#8f5d31"></i>
+              <p>Analytics visualization placeholder — integrate your chart library here for live trend graphs.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const cargoStatus = document.getElementById('cargoStatus');
+    const cargoBadges = document.querySelectorAll('.cargo-item .status-badge');
+
+    cargoStatus.addEventListener('change', (event) => {
+      const value = event.target.value;
+      cargoBadges.forEach((badge, index) => {
+        badge.className = 'status-badge ' + value;
+        badge.innerHTML = `<i class="fas fa-truck"></i> ${event.target.options[event.target.selectedIndex].text}`;
+      });
+    });
+  </script>
 </body>
 </html>
