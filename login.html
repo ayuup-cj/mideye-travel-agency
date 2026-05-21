@@ -1,72 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login | Mideye Travel Agency</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="style.css" rel="stylesheet" />
+  <meta name="description" content="Login to your Mideye Travel Agency account to manage bookings and shipments."/>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <!-- Master CSS -->
+  <link href="style.css" rel="stylesheet"/>
 </head>
-<body>
-<nav id="mainNavbar" class="navbar navbar-expand-lg">
+<body style="background:linear-gradient(135deg, var(--brown) 0%, var(--brown-dark) 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;">
+
+<!-- ═══════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════ -->
+<nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top">
   <div class="container">
     <a class="navbar-brand nav-brand" href="index.html">
       <div class="nav-brand-icon"><i class="fas fa-plane"></i></div>
       <div class="nav-brand-text">Mid<span>eye</span></div>
     </a>
+
     <button class="navbar-toggler-custom d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavMenu">
       <i class="fas fa-bars"></i>
     </button>
+
     <div class="collapse navbar-collapse" id="mobileNavMenu">
-      <ul class="navbar-nav mx-auto gap-1">
-        <li class="nav-item"><a class="nav-link-custom" data-page="index.html" href="index.html"><i class="fas fa-home me-1"></i>Home</a></li>
-        <li class="nav-item"><a class="nav-link-custom" data-page="booking.html" href="booking.html"><i class="fas fa-plane me-1"></i>Book Flight</a></li>
-        <li class="nav-item"><a class="nav-link-custom" data-page="cargo.html" href="cargo.html"><i class="fas fa-box me-1"></i>Cargo</a></li>
-        <li class="nav-item"><a class="nav-link-custom" data-page="tracking.html" href="tracking.html"><i class="fas fa-map-marker-alt me-1"></i>Track</a></li>
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link-custom" href="index.html"><i class="fas fa-home me-1"></i>Home</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="booking.html"><i class="fas fa-plane me-1"></i>Book Flight</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="cargo-request.html"><i class="fas fa-box me-1"></i>Cargo</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="tracking.html"><i class="fas fa-map-marker-alt me-1"></i>Track</a></li>
       </ul>
-      <div class="d-flex gap-2 mt-3 mt-lg-0">
-        <a href="login.html" class="btn-outline-custom" style="font-size:0.85rem;padding:0.6rem 1.3rem;">Login</a>
-        <a href="register.html" class="btn-gold-custom" style="font-size:0.85rem;padding:0.6rem 1.3rem;">Register</a>
-      </div>
     </div>
   </div>
 </nav>
-<main style="padding:5rem 0;">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card p-4 shadow-sm">
-          <div class="text-center mb-4">
-            <span class="section-eyebrow">Member Login</span>
-            <h2 class="section-title mt-3">Sign in to your account</h2>
-          </div>
-          <form id="loginForm" novalidate>
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control form-control-custom" required />
+
+<!-- PAGE CONTENT -->
+<main style="width:100%;padding:2rem;">
+  <div class="container" style="max-width:440px;">
+    <!-- Login Card -->
+    <div class="card border-0 shadow-lg" style="background:var(--white);border-radius:var(--r-lg);">
+      <!-- Card Header -->
+      <div style="background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);padding:2.5rem;text-align:center;border-radius:var(--r-lg) var(--r-lg) 0 0;">
+        <div style="font-size:3rem;color:var(--brown);margin-bottom:1rem;">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h2 class="fw-700 mb-1" style="color:var(--brown);">Welcome Back</h2>
+        <p class="small mb-0" style="color:var(--brown);opacity:0.8;">Sign in to your Mideye account</p>
+      </div>
+
+      <!-- Card Body -->
+      <div style="padding:2.5rem;">
+        <form id="loginForm" novalidate>
+          <!-- Email -->
+          <div class="mb-4">
+            <label class="form-label fw-700" style="color:var(--brown);">Email Address</label>
+            <div style="position:relative;">
+              <span style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1rem;">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <input 
+                type="email" 
+                class="form-control form-control-custom" 
+                placeholder="your@email.com" 
+                required
+                style="padding-left:2.8rem;"
+              />
             </div>
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-              <div class="input-group">
-                <input type="password" class="form-control form-control-custom" required />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-4">
+            <label class="form-label fw-700" style="color:var(--brown);">Password</label>
+            <div style="position:relative;">
+              <span style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1rem;">
+                <i class="fas fa-lock"></i>
+              </span>
+              <input 
+                type="password" 
+                class="form-control form-control-custom" 
+                placeholder="Enter your password" 
+                required
+                id="passwordField"
+                style="padding-left:2.8rem;"
+              />
+              <button 
+                type="button" 
+                style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gold);cursor:pointer;font-size:1.1rem;"
+                onclick="togglePasswordVisibility()"
+              >
+                <i class="fas fa-eye" id="eyeIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="row align-items-center mb-4">
+            <div class="col">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe"/>
+                <label class="form-check-label small" for="rememberMe" style="color:var(--text-muted);">
+                  Remember me
+                </label>
               </div>
             </div>
-            <button type="submit" class="btn-primary-custom w-100">
-              <span>Sign In</span>
-            </button>
-            <div class="text-center mt-3">
-              <span>Don't have an account? <a href="register.html">Register</a></span>
+            <div class="col-auto">
+              <a href="javascript:void(0)" class="small" style="color:var(--brown);font-weight:600;text-decoration:none;">
+                Forgot password?
+              </a>
             </div>
-          </form>
+          </div>
+
+          <!-- Login Button -->
+          <button type="submit" class="btn-primary-custom w-100 py-3 mb-3">
+            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+          </button>
+
+          <!-- Divider -->
+          <div style="text-align:center;margin:1.5rem 0;position:relative;">
+            <span style="background:var(--white);padding:0 1rem;color:var(--text-muted);font-size:0.85rem;">or continue with</span>
+            <div style="position:absolute;left:0;right:0;top:50%;height:1px;background:var(--border);z-index:-1;"></div>
+          </div>
+
+          <!-- Social Login -->
+          <div class="row g-2 mb-4">
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-brown w-100 py-2" style="font-size:0.9rem;">
+                <i class="fab fa-google me-2"></i>Google
+              </button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-brown w-100 py-2" style="font-size:0.9rem;">
+                <i class="fab fa-facebook me-2"></i>Facebook
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Sign Up Link -->
+        <div style="text-align:center;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <p class="small text-muted mb-0">
+            Don't have an account? 
+            <a href="register.html" style="color:var(--brown);font-weight:700;text-decoration:none;">
+              Sign up here
+            </a>
+          </p>
         </div>
       </div>
     </div>
+
+    <!-- Footer Text -->
+    <div style="text-align:center;margin-top:3rem;color:var(--white);">
+      <p class="small mb-1">
+        <i class="fas fa-shield-alt me-1"></i>Your login information is secure and encrypted
+      </p>
+      <p class="small" style="opacity:0.8;">
+        © 2026 Mideye Travel Agency
+      </p>
+    </div>
   </div>
 </main>
+
+<!-- Bootstrap 5 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="main.js"></script>
+<!-- Login Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.getElementById('mainNavbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Login form submitted! (Demo)');
+      // In production, this would send data to backend
+    });
+  });
+
+  function togglePasswordVisibility() {
+    const field = document.getElementById('passwordField');
+    const icon = document.getElementById('eyeIcon');
+    if (field.type === 'password') {
+      field.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      field.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
+</script>
 </body>
 </html>
